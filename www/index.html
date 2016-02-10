@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html>
+<!--
+  * Please see the included README.md file for license terms and conditions.
+  -->
+<head>
+    <title>Blank Cordova Mobile App Project Template (Lite)</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Security-Policy" content="script-src * 'unsafe-eval' 'unsafe-inline'; object-src 'self'; style-src * 'unsafe-inline'; media-src * 'unsafe-inline'">
+
+    <!-- see http://webdesign.tutsplus.com/tutorials/htmlcss-tutorials/quick-tip-dont-forget-the-viewport-meta-tag -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <style>
+        /* following two viewport lines are equivalent to the meta viewport statement above, needed for Windows */
+        /* see http://www.quirksmode.org/blog/archives/2014/05/html5_dev_conf.html and http://dev.w3.org/csswg/css-device-adapt/ */
+        @-ms-viewport { width: 100vw ; zoom: 100% ; }  @viewport { width: 100vw ; zoom: 100% ; }
+        @-ms-viewport { user-zoom: fixed ; }           @viewport { user-zoom: fixed ; }
+    </style>
+
+    <script src="cordova.js"></script>          <!-- phantom library, needed for Cordova api calls, added during build -->
+    <script src="js/app.js"></script>           <!-- recommended location of your JavaScript code relative to other JS files -->
+    <script src="xdk/init-dev.js"></script>     <!-- normalizes device and document ready events, see README for details -->
+    <script src="js/mobile/jquery.js"></script>
+    <script src="js/mobile/jquery.mobile-1.4.5.min.js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script src="js/mobile/jquery-ui.js"></script>
+  <!--  <script src="js/mobile/jquery.spinbox.js"></script>-->
+    <script src="js/TelasJs/ControlerPedideiro.js"></script>
+    <link href="js/mobile/jquery.mobile-1.4.5.css" rel="stylesheet" />
+    <link href="css/app.css" rel="stylesheet" />
+    <link href="font/flaticon/flaticon.css" rel="stylesheet" />
+    <link href="font/icon/css/icon.css" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet'    type='text/css'>
+
+</head>
+
+<body>
+     <script id="panel-init">
+//Teste
+		$(function() {
+			$( "body>[data-role='panel']" ).panel();
+		});
+    </script>
+   <script>
+       $(function () {
+            var token = localStorage.getItem('jtoken');
+            if (token != null && token != "") {
+
+                window.location.href = '#fornecedores';
+            }
+     });
+
+
+    </script>
+
+<script>
+
+ //Mapa Pedideiro teste
+ $(document).on("pageshow", "#map-page", function () {
+
+        PedideiroManager.carregarMapa();
+
+ });
+
+ $(document).on("pageshow", "#login", function () {
+
+     $("#btnLogin").on('click', function () {
+
+         PedideiroManager.loginUsuario();
+
+     });
+
+
+ });
+
+ $(document).on("pageshow", "#fornecedores", function () {
+
+        PedideiroManager.carregarFornecedores();
+
+
+        $("#btnSair").on('click', function () {
+
+            PedideiroManager.logoffUsuario();
+
+
+        });
+
+ });
+
+
+   </script>
+
+
+
+     <!-- MENU -->
+    <div data-role="panel" id="nav" class="panel-nav" data-position="left" data-display="overlay" data-theme="a">
+
+        <div class="brand-nav">
+            <img src="img/pedideiro-logomarca-horizontal.png" />
+        </div>
+
+        <ul data-role="listview">
+            <li><a href="#pedidos" data-transition="slide"><i class="flaticon-shopping109"></i>Pedidos <i class="icon-play-3 icon-nav-right"></i></a></li>
+            <li><a href="#configuracoes" data-transition="slide"><i class="flaticon-tool45"></i>Configurações <i class="icon-play-3 icon-nav-right"></i></a></li>
+            <li><a href="#suporte" data-transition="slide"><i class="flaticon-lifesaver10"></i>Suporte <i class="icon-play-3 icon-nav-right"></i></a></li>
+            <li><a href="#avaliar" data-transition="slide"><i class="flaticon-star178 "></i>Avaliar <i class="icon-play-3 icon-nav-right"></i></a></li>
+            <li><a id="btnSair"><i class="flaticon-power96"></i>Sair <i class="icon-play-3 icon-nav-right"></i></a></li>
+        </ul>
+
+    </div>
+    <!-- // -->
+
+    <!-- START -->
+    <div data-role="page" id="index" data-title="Pedideiro - Faça login ou cadastre-se">
+
+        <div class="ui-content" role="main">
+            <div class="padding-inner wrap-center text-center" style="padding-left:30px; padding-right:30px;">
+
+                <div class="brand-header">
+                    <img alt="Pedideiro" title="Pedideiro" src="img/pedideiro-logomarca-vertical.png" />
+                    <h1>Faça seu pedido de água ou gás e receba em casa</h1>
+                </div>
+
+                <a id="btnCriarConta" href="#cadastro" data-transition="slide" class="btn btn-blue btn-blue-light btn-expand" title="Criar conta grátis">Criar conta grátis</a>
+                <a id="btnLoginEmail" href="#login" data-transition="slide" class="btn btn-blue btn-expand" title="Login com e-mail">Login com e-mail</a>
+                <a id="btnLoginFacebook" data-transition="slide" class="btn btn-blue btn-expand btn-facebook btn-social" title="Login com facebook"><i class="icon-facebook-rect-2"></i> Login com Facebook</a>
+
+            </div>
+        </div>
+
+    </div>
+    <!-- // -->
+    <!-- LOGIN -->
+    <div data-role="page" id="login" data-title="Login de usuário - Pedideiro">
+
+        <div data-role="header" data-position="fixed" data-tap-toggle="false">
+            <h1>Login</h1>
+            <a href="#" data-rel="back" class="ui-btn ui-btn-icon-left btn-back"><i class="flaticon-go10"></i></a>
+        </div><!-- /header -->
+
+        <div class="ui-content" role="main">
+            <div class="padding-inner wrap-center">
+
+                <div class="group-form">
+                    <i class="flaticon-envelope54"></i>
+                    <input name="text-basic" id="txtEmail" title="Informe seu e-mail" type="email" value="" placeholder="E-mail:">
+                </div>
+                <div class="group-form">
+                    <i class="flaticon-lock8"></i>
+                    <input name="password" id="txtSenha" title="Informe sua senha" value="" placeholder="Senha:" autocomplete="off" type="password">
+                </div>
+
+                <a id="btnLogin" href="#" data-transition="slide" class="btn btn-blue btn-expand" title="Clique para fazer login">Entrar</a>
+
+                <span class="text-center display-block footer-small"><a title="Clique para Recuperar Senha" href="#recuperar" data-transition="slide">Esqueci a minha senha</a></span>
+
+            </div>
+        </div>
+
+    </div>
+    <!-- // -->
+    <!-- RECUPERAR SENHA -->
+    <div data-role="page" id="recuperar" data-title="Recuperar senha - Pedideiro">
+
+        <div data-role="header" data-position="fixed" data-tap-toggle="false">
+            <h1>Recuperar senha</h1>
+            <a href="#" data-rel="back" class="ui-btn ui-btn-icon-left btn-back"><i class="flaticon-go10"></i></a>
+        </div><!-- /header -->
+
+        <div class="ui-content" role="main">
+            <div class="padding-inner wrap-center">
+
+                <div class="group-form">
+                    <i class="flaticon-envelope54"></i>
+                    <input name="text-basic" id="txtEmail" title="Informe seu e-mail" type="email" value="" placeholder="E-mail:" />
+                </div>
+
+                <a id="btnRecuperar" class="btn btn-blue btn-expand" title="Clique para solicitar uma nova senha">Solicitar</a>
+
+                <span class="text-center display-block footer-small"><a href="#" title="Clique para fazer Login" data-rel="back">Lembrei a minha senha</a></span>
+
+            </div>
+        </div>
+
+    </div>
+    <!-- // -->
+    <!-- CADASTRO -->
+    <div data-role="page" id="cadastro" data-title="Cadastro de usuário - Pedideiro">
+
+        <div data-role="header" data-position="fixed" data-tap-toggle="false">
+            <h1>Cadastro</h1>
+            <a href="#" data-rel="back" class="ui-btn ui-btn-icon-left btn-back"><i class="flaticon-go10"></i></a>
+        </div><!-- /header -->
+
+        <div class="ui-content" role="main">
+            <div class="padding-inner wrap-center">
+
+                <div class="group-form">
+                    <i class="flaticon-profile10"></i>
+                    <input name="text-basic" id="txtNome" title="Informe seu nome" type="text" value="" placeholder="Nome">
+                </div>
+
+                <div class="group-form">
+                    <i class="flaticon-cellphone100"></i>
+                    <input name="text-basic" id="txtFone" title="Informe seu telefone" type="text" value="" placeholder="Telefone">
+                </div>
+
+                <div class="clearfix">
+
+                    <div class="group-form input-left">
+                        <i class="icon-globe"></i>
+                        <input name="text-basic" id="txtCEP" title="Informe seu CEP" type="text" value="" placeholder="CEP">
+                    </div>
+
+                    <div class="input-right btn-form">
+                        <a href="#" id="btnGPS" title="Buscar CEP no mapa" class="btn btn-blue btn-expand text-center"><i class="flaticon-gps51"></i></a>
+                    </div>
+
+                </div>
+
+                <div class="group-form">
+                    <i class="flaticon-gps17"></i>
+                    <input name="text-basic" id="txtEndereco" title="Informe seu endereço" type="text" value="" placeholder="Endereço">
+                </div>
+
+
+                <div class="clearfix">
+
+                    <div class="group-form left" style="width:35.5%">
+                        <i class="flaticon-house2" style="vertical-align:1px"></i>
+                        <input name="text-basic" id="txtNumero" title="Informe o número" type="text" value="" placeholder="Nº">
+                    </div>
+
+                    <div class="group-form right" style="width:62%">
+                        <i class="flaticon-information3"></i>
+                        <input name="text-basic" id="txtComplemento" title="Informe o complemento" type="text" value="" placeholder="Complemento">
+                    </div>
+
+                </div>
+
+                <div class="group-form">
+                    <i class="flaticon-envelope54"></i>
+                    <input name="text-basic" id="txtEmail" title="Informe seu e-mail" type="email" value="" placeholder="E-mail">
+                </div>
+
+                <div class="group-form">
+                    <i class="flaticon-lock8"></i>
+                    <input name="password" id="txtSenha" title="Informe sua senha" value="" placeholder="Senha" autocomplete="off" type="password">
+                </div>
+
+                <div class="group-form">
+                    <i class="flaticon-lock8"></i>
+                    <input name="password" id="txtSenha" title="Informe sua senha novamente" value="" placeholder="Confirmar senha" autocomplete="off" type="password">
+                </div>
+
+                <a id="btnCadastrar" href="#" data-transition="slide" class="btn btn-blue btn-expand" title="Clique para confirmar cadastro">Confirmar</a>
+
+                <span class="text-center display-block footer-small"><a title="Clique para fazer login" href="#login" data-transition="slide">Já tenho uma conta</a></span>
+
+            </div>
+        </div>
+
+    </div>
+    <!-- // -->
+
+    <!-- LISTA DE FORNECEDORES -->
+    <div data-role="page" id="fornecedores" data-quicklinks="true" data-title="Fornecedores -  Pedideiro">
+
+
+
+        <div data-role="header" data-position="fixed" data-tap-toggle="false">
+            <h1>Fornecedores</h1>
+            <a href="#nav" class="ui-btn ui-btn-icon-left"><i class="flaticon-lines7"></i></a>
+            <a href="#filter" class="ui-btn ui-btn-icon-left"><i class="flaticon-filter"></i></a>
+        </div><!-- /header -->
+
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#" class="ui-btn-active ui-state-persist ui-btn-active" data-transition="slidedown"><i class="icon-th"></i> Lista</a></li>
+                <li class="fix-tab"><a href="#map-page" data-transition="slideup"><i class="flaticon-gps51"></i> Mapa</a></li>
+            </ul>
+        </div>
+
+        <div class="ui-content" role="main">
+
+            <ul class="list-vendor" id="lista_fornecedores"  data-role="listview" data-filter="true" data-filter-placeholder="Buscar fornecedor" data-filter-theme="a" data-inset="true">
+                <!--<li>
+                    <a href="#fornecedor" data-transition="slide">
+                        <i class="flaticon-transport643"></i>
+                        <div class="list-info">
+                            <h3>Varejão das frutas</h3>
+                            <span class="list-info-footer"><i class="icon-location-6 mini-icon"></i> Conjunto Esperança</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#fornecedor" data-transition="slide">
+                        <i class="flaticon-transport643"></i>
+                        <div class="list-info">
+                            <h3>Super do Povo</h3>
+                            <span class="list-info-footer"><i class="icon-location-6 mini-icon"></i> Genibaú</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" data-transition="slide">
+                        <i class="flaticon-transport643"></i>
+                        <div class="list-info">
+                            <h3>Cometa Supermercados</h3>
+                            <span class="list-info-footer"><i class="icon-location-6 mini-icon"></i> Henrique Jorge</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#fornecedor" data-transition="slide">
+                        <i class="flaticon-transport643"></i>
+                        <div class="list-info">
+                            <h3>Extra Parangaba</h3>
+                            <span class="list-info-footer"><i class="icon-location-6 mini-icon"></i> Parangaba</span>
+                        </div>
+                    </a>
+                </li>-->
+            </ul>
+
+            <div class="footer-info">
+                <h4>Não encontrou o seu fornecedor?</h4>
+                <a id="btnSugerir" class="btn btn-blue btn-expand">Indique agora</a>
+            </div>
+
+
+        </div>
+
+    </div>
+    <!-- // -->
+
+      <!-- PAGINA DO FORNECEDOR -->
+    <div data-role="page" id="fornecedorProdutos" data-quicklinks="true" data-title="Fornecedor - Pedideiro">
+
+        <div data-role="header" data-position="fixed" data-tap-toggle="false">
+            <h1>Varejão das frutas</h1>
+            <a href="#" data-rel="back" class="ui-btn ui-btn-icon-left btn-back"><i class="flaticon-go10"></i></a>
+            <a href="#carrinho" data-transition="slideup" class="ui-btn ui-btn-icon-left ui-shopping"><i class="flaticon-shopping109"></i><span class="number-cart">2</span></a>
+        </div><!-- /header -->
+
+        <div data-role="tabs" id="tabs">
+            <div data-role="navbar">
+                <ul>
+                    <li><a title="Produtos" href="#produtos" class="ui-btn-active"><i class="flaticon-tick7"></i></a></li>
+                    <li><a title="Informações" href="#informacoes"><i class="flaticon-info31"></i></a></li>
+                    <li><a title="Avaliações" href="#avalicoes"><i class="flaticon-bookmark45"></i></a></li>
+                </ul>
+            </div>
+            <div id="produtos" class="text-center">
+
+                <div data-role="collapsible" data-collapsed="false" data-iconpos="right" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
+                    <h2 class="title-listview"><i class="flaticon-liquid15"></i> ÁGUA NATURAL</h2>
+
+                    <fieldset class="list-product" data-role="controlgroup" data-iconpos="right">
+                        <input name="checkbox-h-6a1" id="checkbox-h-6a1" type="checkbox">
+                        <label for="checkbox-h-6a1">
+                            <img src="img/garrafao.png" />
+                            <h3>Indaiá - 20L (Unidade)</h3>
+                            <span>R$ 7,50</span>
+                        </label>
+                        <input name="checkbox-h-6b1" id="checkbox-h-6b1" type="checkbox">
+                        <label for="checkbox-h-6b1">
+                            <img src="img/garrafao.png" />
+                            <h3>Indaiá - 20L (Unidade)</h3>
+                            <span>R$ 7,50</span>
+                        </label>
+                        <input name="checkbox-h-6c1" id="checkbox-h-6c1" type="checkbox">
+                        <label for="checkbox-h-6c1">
+                            <img src="img/garrafao.png" />
+                            <h3>Indaiá - 20L (Unidade)</h3>
+                            <span>R$ 7,50</span>
+                        </label>
+                    </fieldset>
+
+                </div>
+
+                <div data-role="collapsible" data-collapsed="false" data-iconpos="right" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
+                    <h2 class="title-listview"><i class="flaticon-burn7"></i> GÁS DE COZINHA</h2>
+
+                    <fieldset class="list-product" data-role="controlgroup" data-iconpos="right">
+                        <input name="checkbox-h-6a" id="checkbox-h-6a" type="checkbox">
+                        <label for="checkbox-h-6a">
+                            <h3>Água - Indaiá (20L)</h3>
+                            <span>R$ 7,50</span>
+                        </label>
+                        <input name="checkbox-h-6b" id="checkbox-h-6b" type="checkbox">
+                        <label for="checkbox-h-6b">
+                            <h3>Água - Indaiá (20L)</h3>
+                            <span>R$ 7,50</span>
+                        </label>
+                        <input name="checkbox-h-6c" id="checkbox-h-6c" type="checkbox">
+                        <label for="checkbox-h-6c">
+                            <h3>Água - Indaiá (20 litros)</h3>
+                            <span>R$ 7,50</span>
+                        </label>
+                    </fieldset>
+
+                </div>
+
+                <div data-role="footer" data-position="fixed" data-tap-toggle="false" class="">
+                    <div class="footer-info">
+                        <a id="btnAdicionar" href="#carrinho" data-transition="slideup" class="btn btn-blue btn-expand">Visualizar carrinho</a>
+                    </div>
+                </div>
+
+            </div>
+            <div id="informacoes" class="text-center">
+                <h3>O seu carrinho está vazio</h3>
+            </div>
+            <div id="avalicoes" class="text-center">
+                <h3>Ninguém avaliou o fornecedor</h3>
+            </div>
+        </div>
+    </div>
+    <!-- // -->
+    <!-- CARRINHO -->
+    <div data-role="page" id="carrinho" data-quicklinks="true" data-title="Carrinho - Pedideiro">
+
+        <div data-role="header" data-position="fixed" data-tap-toggle="false">
+            <h1>Carrinho</h1>
+            <a href="#" data-rel="back" class="ui-btn ui-btn-icon-left btn-back"><i class="flaticon-go10"></i></a>
+        </div><!-- /header -->
+
+        <div class="ui-content" role="main">
+
+            <div class="grid-cart">
+
+                <table style="width:100%" cellpadding="0" cellspacing="0">
+
+                    <tr class="linha-produto">
+
+                        <td class="grid-cart-one">
+                            <img src="img/garrafao.png" />
+                            <div class="box-position">
+                                <h3>Santa Clara - 20L</h3>
+                                <span>R$ 7,50</span>
+                            </div>
+                        </td>
+
+                        <td class="grid-cart-two text-center">
+                            <div class="ui-field-contain">
+                                <input type="text" data-role="spinbox" name="spin" id="spin" value="1" min="1" max="100" />
+                            </div>
+                        </td>
+
+                        <td class="grid-cart-three text-center">
+                            <a href="#"><i class="icon-cancel"></i></a>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td class="grid-cart-one">
+                            <img src="img/garrafao.png" />
+                            <div class="box-position">
+                                <h3>Indaiá - 20L</h3>
+                                <span>R$ 7,50</span>
+                            </div>
+                        </td>
+
+                        <td class="grid-cart-two text-center">
+                            <div class="ui-field-contain">
+                                <input type="text" data-role="spinbox" name="spin" id="spin" value="1" min="1" max="100" />
+                            </div>
+                        </td>
+
+                        <td class="grid-cart-three text-center">
+                            <a href="#"><i class="icon-cancel"></i></a>
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </div>
+
+        <div data-role="footer" data-position="fixed" data-tap-toggle="false" class="">
+            <div class="footer-info">
+                <a id="btnDetalharPedido" href="#detalhar" data-transition="slide" class="btn btn-blue btn-expand">Detalhar pedido</a>
+            </div>
+        </div>
+
+
+      </div>
+    <!-- // -->
+
+
+    <!-- DETALHAR PEDIDO -->
+    <div data-role="page" id="detalhar" data-quicklinks="true" data-title="Detalhar pedido - Pedideiro">
+
+        <div data-role="header" data-position="fixed" data-tap-toggle="false">
+            <h1>Detalhar pedido</h1>
+            <a href="#" data-rel="back" class="ui-btn ui-btn-icon-left btn-back"><i class="flaticon-go10"></i></a>
+        </div><!-- /header -->
+
+        <div class="ui-content" role="main">
+
+            <div class="box-detalhes">
+
+                <div data-role="collapsible" data-collapsed="false" data-iconpos="right" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
+                    <h2 class="title-listview"><i class="flaticon-shopping109"></i> MEU CARRINHO</h2>
+
+                    <div class="grid-cart">
+
+                        <table style="width:100%" cellpadding="0" cellspacing="0">
+
+                            <tr class="linha-produto">
+
+                                <td class="grid-cart-one">
+                                    <img src="img/garrafao.png" />
+                                    <div class="box-position">
+                                        <h3>Santa Clara - 20L</h3>
+                                        <span>R$ 7,50</span>
+                                    </div>
+                                </td>
+
+                                <td class="grid-cart-two text-center">
+                                    Qtd. 2
+                                </td>
+
+                                <td class="grid-cart-three text-center">
+                                    <a href="#"><i class="icon-cancel"></i></a>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td class="grid-cart-one">
+                                    <img src="img/garrafao.png" />
+                                    <div class="box-position">
+                                        <h3>Indaiá - 20L</h3>
+                                        <span>R$ 7,50</span>
+                                    </div>
+                                </td>
+
+                                <td class="grid-cart-two text-center">
+                                    Qtd. 1
+                                </td>
+
+                                <td class="grid-cart-three text-center">
+                                    <a href="#"><i class="icon-cancel"></i></a>
+                                </td>
+
+                            </tr>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+
+            <div class="box-detalhes">
+
+                <div data-role="collapsible" data-collapsed="false" data-iconpos="right" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
+                    <h2 class="title-listview"><i class="icon-arrows-cw-2"></i> GARRAFÃO P/ TROCA</h2>
+
+                <fieldset data-role="controlgroup" data-iconpos="right">
+                    <input name="checkbox-v-2aa" id="checkbox-v-2aa" type="checkbox">
+                    <label for="checkbox-v-2aa">Sim</label>
+                    <input name="checkbox-v-2bb" id="checkbox-v-2bb" type="checkbox">
+                    <label for="checkbox-v-2bb">Não</label>
+                </fieldset>
+
+                </div>
+
+            </div>
+
+
+
+
+            <div class="box-detalhes">
+
+                <div data-role="collapsible" data-collapsed="false" data-iconpos="right" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
+                    <h2 class="title-listview"><i class="icon-arrows-cw-2"></i> BOTIJÃO P/ TROCA</h2>
+
+                <fieldset data-role="controlgroup" data-iconpos="right">
+                    <input name="checkbox-v-2a" id="checkbox-v-2a" type="checkbox">
+                    <label for="checkbox-v-2a">Sim</label>
+                    <input name="checkbox-v-2b" id="checkbox-v-2b" type="checkbox">
+                    <label for="checkbox-v-2b">Não</label>
+                </fieldset>
+
+            </div>
+
+            </div>
+
+
+
+            <div class="box-detalhes">
+
+                <div data-role="collapsible" data-collapsed="false" data-iconpos="right" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
+                    <h2 class="title-listview"><i class="flaticon-gps51"></i> ENDEREÇO DE ENTREGA</h2>
+
+                    <div class="padding-inner">
+                        Av. Carneiro de Mendonça, 2154 - Jóquei Clube
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="box-detalhes">
+
+                <div data-role="collapsible" data-collapsed="false" data-iconpos="right" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
+                    <h2 class="title-listview"><i class="flaticon-money164"></i> FORMA DE PAGAMENTO</h2>
+
+                <fieldset data-role="controlgroup" data-iconpos="right">
+                    <input name="radio-choice-v-2" id="radio-choice-v-2c" value="other" checked="checked" type="radio">
+                    <label for="radio-choice-v-2c">À vista</label>
+                    <input name="radio-choice-v-2" id="radio-choice-v-2a" value="on" type="radio">
+                    <label for="radio-choice-v-2b">Master</label>
+                    <input name="radio-choice-v-2" id="radio-choice-v-2b" value="on" type="radio">
+                    <label for="radio-choice-v-2a">Visa</label>
+                    <input name="radio-choice-v-2" id="radio-choice-v-2d" value="on" type="radio">
+                    <label for="radio-choice-v-2d">Elo</label>
+                </fieldset>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div data-role="footer" data-position="fixed" data-tap-toggle="false" class="">
+            <div class="footer-info">
+                <a id="btnFinalizar" href="#alerta" data-rel="dialog" data-transition="pop" class="btn btn-blue btn-expand">Confirmar pedido</a>
+            </div>
+        </div>
+
+
+
+    </div>
+    <!-- // -->
+
+
+
+
+    <!-- POPUP DE CONFIRMACAO DO PEDIDO -->
+    <div data-role="page" id="alerta" data-dom-cache="true">
+        <!-- dialog-->
+
+        <div data-role="header" data-theme="b">
+            <h1>Atenção!</h1>
+        </div><!-- /header -->
+
+        <div class="ui-content" role="main">
+            <p>Tem certeza que deseja confirmar o seu pedido?</p>
+
+            <a href="index.html" class="ui-btn ui-corner-all ui-shadow ui-btn-b" data-rel="back">Cancelar</a>
+            <a href="#confirmado" class="ui-btn ui-corner-all ui-shadow ui-btn-b" data-rel="back">Confirmar</a>
+        </div>
+
+    </div>
+    <!-- // -->
+    <!-- LOGIN -->
+    <div data-role="page" id="pedidos" data-title="Meus pedidos - Pedideiro">
+
+        <div data-role="header" data-position="fixed" data-tap-toggle="false">
+            <h1>Meus pedidos</h1>
+            <a href="#" data-rel="back" class="ui-btn ui-btn-icon-left btn-back"><i class="flaticon-go10"></i></a>
+        </div><!-- /header -->
+
+        <div class="ui-content" role="main">
+            <div class="padding-inner">
+                <h2>Produto(s) no carrinho</h2>
+                <h2>Garrafão para trocar?</h2>
+                <h2>Botijão para trocar?</h2>
+            </div>
+        </div>
+
+    </div>
+    <!-- // -->
+    <!-- MAPA -->
+    <div data-role="page" data-url="map-page" id="map-page" data-title="Mapa - Pedideiro">
+        <div data-role="header" class="ui-header-map">
+            <h1>Mapa</h1>
+            <a href="#" data-rel="back" class="ui-btn ui-btn-icon-left btn-back"><i class="flaticon-go10"></i></a>
+            <a href="#filter" class="ui-btn ui-btn-icon-left"><i class="flaticon-filter"></i></a>
+        </div>
+
+
+        <div class="ui-field-contain clearfix">
+            <div class="input-left">
+                <input name="search-1" id="search-1" placeholder="Informe endereço ou cep" value="" type="search">
+            </div>
+            <div class="input-right">
+                <a id="btnGPS" title="Detectar a minha localização" class="btn btn-blue btn-expand text-center"><i class="flaticon-gps17"></i></a>
+            </div>
+        </div>
+        <input type="hidden" id="txtLatitude" name="txtLatitude" />
+        <input type="hidden" id="txtLongitude" name="txtLongitude" />
+
+        <div role="main" class="ui-content" id="map-canvas">
+            <!-- map loads here... -->
+        </div>
+
+    </div>
+    <!-- // -->
+
+
+</body>
+</html>

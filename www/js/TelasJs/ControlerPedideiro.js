@@ -1,5 +1,5 @@
 
-//Gerenciador pedideiro.
+//Gerenciador pedideiro. ok
 
 var PedideiroManager = {
 

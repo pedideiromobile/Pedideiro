@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html>//Teste
+<html>
 <!--
-  * Please see the included README.md file for license terms and conditions. Bricio Web
+  * Please see the included README.md file for license terms and conditions.
   -->
 <head>
-
-
+    <title>Blank Cordova Mobile App Project Template (Lite)</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
 <meta http-equiv="Content-Security-Policy" content="script-src * 'unsafe-eval' 'unsafe-inline'; object-src 'self'; style-src * 'unsafe-inline'; media-src * 'unsafe-inline'">
 
     <!-- see http://webdesign.tutsplus.com/tutorials/htmlcss-tutorials/quick-tip-dont-forget-the-viewport-meta-tag -->
@@ -20,7 +20,7 @@
 
     <script src="cordova.js"></script>          <!-- phantom library, needed for Cordova api calls, added during build -->
     <script src="js/app.js"></script>           <!-- recommended location of your JavaScript code relative to other JS files -->
-    <script src="xdk/init-dev.js"></script>     <!-- normalizes device and document ready events, see README for details -->
+    <script src="xdk/init-dev.js"></script>     <!-- normbalizes device and document ready events, see README for details -->
     <script src="js/mobile/jquery.js"></script>
     <script src="js/mobile/jquery.mobile-1.4.5.min.js"></script>
     <script src="http://maps.googleapis.com/maps/api/js?v=3.exp"></script>
@@ -31,14 +31,13 @@
     <link href="css/app.css" rel="stylesheet" />
     <link href="font/flaticon/flaticon.css" rel="stylesheet" />
     <link href="font/icon/css/icon.css" rel="stylesheet" />
-
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet'    type='text/css'>
 
 </head>
 
 <body>
      <script id="panel-init">
-//Teste
+
 		$(function() {
 			$( "body>[data-role='panel']" ).panel();
 		});
@@ -49,11 +48,10 @@
             if (token != null && token != "") {
 
                 window.location.href = '#fornecedores';
-
             }
 
-           Pedideiro.inicializar();
-       });
+
+     });
 
 
     </script>
@@ -80,7 +78,9 @@
 
  $(document).on("pageshow", "#fornecedores", function () {
 
+
         PedideiroManager.carregarFornecedores();
+
 
 
         $("#btnSair").on('click', function () {
@@ -90,7 +90,29 @@
 
         });
 
+    $(document).on("click", "#lista_fornecedores li" ,function (event) {
+
+        var codigo = $(this).find(".codigoFornecedor").val()
+
+        alert($(this).text());
+        console.log(codigo);
+    });
+
+
+
  });
+
+ $(document).on("pageshow", "#fornecedorProdutos", function () {
+
+
+
+
+
+
+ });
+
+
+
 
 
    </script>

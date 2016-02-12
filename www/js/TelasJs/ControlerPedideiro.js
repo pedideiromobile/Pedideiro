@@ -1,18 +1,31 @@
 
-//Gerenciador pedideiro. ok
+//Gerenciador pedideiro.
 
 var PedideiroManager = {
 
-   // inicializarPedideiro: function(){
-      //  $(document).on("click",".carrega-fornecedor", function(evt){
+    incializarPedideiro: function(){
 
-        //  var codigo = $(this).siblings(".codigoFornecedor").val();
+ function register_event_handlers()
+ {
 
 
 
-       // });
-  //  },
+    $(document).on("click", ".lista-fornecedor", function(evt)
+    {
+        var codigo = $(this).siblings(".codigoFornecedor").val();
+        console.log("OK");
 
+
+    });
+
+
+ }
+
+
+document.addEventListener("app.Ready", register_event_handlers, false);
+
+
+ },
 
     basePath: function () { return 'http://localhost:64817/api'; },
 
@@ -103,13 +116,13 @@ var PedideiroManager = {
 
                 $("#lista_fornecedores").append(
                         " <li>" +
-                        " <a href='#fornecedorProdutos' class='.carrega-fornecedor' data-transition='slide'>" +
+                        " <a class='lista-fornecedor' href='#fornecedorProdutos' data-transition='slide'>" +
                         " <i class='flaticon-transport643'></i>" +
                         " <div class='list-info'>" +
                         " <h3>"+item.Nome+"</h3>" +
-                        " <span class='list-info-footer'><i class='icon-location-6 mini-icon'></i>   Conjunto Esperança</span>" +
+                        " <span class='list-info-footer'><i class='icon-location-6 mini-icon'></i> Conjunto Esperança</span>" +
                         " </div>" +
-                        "<input class='codigoFornecedor' value='"+item.Id+"' hidden='hidden'>
+                        "<input class='codigoFornecedor' value="+item.Id+" hidden='hidden'>"+
                         " </a>" +
                         " </li>")
             });
@@ -276,5 +289,9 @@ var PedideiroManager = {
 
     }, // Carregar Mapa de Fornecedores.
 
+    carregarProdutos : function(id){
+
+
+    }
 
 }

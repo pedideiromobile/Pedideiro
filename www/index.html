@@ -4,8 +4,8 @@
   * Please see the included README.md file for license terms and conditions. Bricio Web
   -->
 <head>
-    <title>Blank Cordova Mobile App Project Template (Lite)</title>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+
 <meta http-equiv="Content-Security-Policy" content="script-src * 'unsafe-eval' 'unsafe-inline'; object-src 'self'; style-src * 'unsafe-inline'; media-src * 'unsafe-inline'">
 
     <!-- see http://webdesign.tutsplus.com/tutorials/htmlcss-tutorials/quick-tip-dont-forget-the-viewport-meta-tag -->
@@ -31,6 +31,7 @@
     <link href="css/app.css" rel="stylesheet" />
     <link href="font/flaticon/flaticon.css" rel="stylesheet" />
     <link href="font/icon/css/icon.css" rel="stylesheet" />
+
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet'    type='text/css'>
 
 </head>
@@ -48,8 +49,11 @@
             if (token != null && token != "") {
 
                 window.location.href = '#fornecedores';
+
             }
-     });
+
+           Pedideiro.inicializar();
+       });
 
 
     </script>

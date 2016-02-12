@@ -3,17 +3,15 @@
 
 var PedideiroManager = {
 
-    inicializar : function(){
+   // inicializarPedideiro: function(){
+      //  $(document).on("click",".carrega-fornecedor", function(evt){
 
-        $(document).on("click",".carrega-fornecedor",function(evt){
-
-          var codigo = $(this).siblings(".codigoFornecedor").val();
-
+        //  var codigo = $(this).siblings(".codigoFornecedor").val();
 
 
-        }
 
-    },
+       // });
+  //  },
 
 
     basePath: function () { return 'http://localhost:64817/api'; },

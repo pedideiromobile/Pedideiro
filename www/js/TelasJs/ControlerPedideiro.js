@@ -5,24 +5,23 @@ var PedideiroManager = {
 
     incializarPedideiro: function(){
 
- function register_event_handlers()
- {
 
 
 
-    $(document).on("click", ".lista-fornecedor", function(evt)
-    {
-        var codigo = $(this).siblings(".codigoFornecedor").val();
-        console.log("OK");
+    $(document).on("click", "#lista_fornecedores li" ,function (event) {
 
+        var codigo = $(this).find(".codigoFornecedor").val()
 
+        alert($(this).text());
+        console.log(codigo);
     });
 
 
- }
 
 
-document.addEventListener("app.Ready", register_event_handlers, false);
+
+
+
 
 
  },

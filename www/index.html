@@ -80,7 +80,7 @@
 
 
         PedideiroManager.carregarFornecedores();
-
+        PedideiroManager.incializarPedideiro();
 
 
         $("#btnSair").on('click', function () {
@@ -90,14 +90,14 @@
 
         });
 
-    $(document).on("click", "#lista_fornecedores li" ,function (event) {
+ //   $(document).on("click", "#lista_fornecedores li" ,function (event) {
 
-        var codigo = $(this).find(".codigoFornecedor").val()
+   //     var codigo = $(this).find(".codigoFornecedor").val()
 
-        alert($(this).text());
-        console.log(codigo);
-    });
-
+   //     alert($(this).text());
+    //    console.log(codigo);
+  //  });
+//
 
 
  });

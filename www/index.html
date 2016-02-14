@@ -18,14 +18,14 @@
         @-ms-viewport { user-zoom: fixed ; }           @viewport { user-zoom: fixed ; }
     </style>
 
-    <script src="cordova.js"></script>          <!-- phantom library, needed for Cordova api calls, added during build -->
-    <script src="js/app.js"></script>           <!-- recommended location of your JavaScript code relative to other JS files -->
-    <script src="xdk/init-dev.js"></script>     <!-- normbalizes device and document ready events, see README for details -->
+    <script src="cordova.js"></script>
+    <script src="js/app.js"></script>
+    <script src="xdk/init-dev.js"></script>
     <script src="js/mobile/jquery.js"></script>
     <script src="js/mobile/jquery.mobile-1.4.5.min.js"></script>
     <script src="http://maps.googleapis.com/maps/api/js?v=3.exp"></script>
     <script src="js/mobile/jquery-ui.js"></script>
-  <!--  <script src="js/mobile/jquery.spinbox.js"></script>-->
+    <script src="js/mobile/jquery.spinbox.js"></script>-->
     <script src="js/TelasJs/ControlerPedideiro.js"></script>
     <link href="js/mobile/jquery.mobile-1.4.5.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
@@ -90,14 +90,14 @@
 
         });
 
- //   $(document).on("click", "#lista_fornecedores li" ,function (event) {
+   $(document).on("click", "#lista_fornecedores li" ,function (event) {
 
-   //     var codigo = $(this).find(".codigoFornecedor").val()
+      var codigo = $(this).find(".codigoFornecedor").val()
 
-   //     alert($(this).text());
-    //    console.log(codigo);
-  //  });
-//
+      alert($(this).text());
+      console.log(codigo);
+   });
+
 
 
  });

@@ -311,7 +311,7 @@ var PedideiroManager = {
                $("#lista-produtos").append(
                 "<li>"+
                 "<input name='checkbox-h-6a7' id='checkbox-h-6a7' type='checkbox'>"+
-                "<label for='checkbox-h-6a7>"+
+                "<label for='checkbox-h-6a7'>"+
                 "<img src='img/garrafao.png'/>"+
                 "<h3>Indaiá - 20L (Unidade)</h3>"+
                 "<span>R$ 7,50</span>"+

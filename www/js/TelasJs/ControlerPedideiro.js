@@ -303,16 +303,30 @@ var PedideiroManager = {
             }
         })
         .done(function (data) {
-           // $("#").empty();
+            $("#lista-produtos").empty();
+            $("#").append();//Recarrega de lista
+
             $.each(data, function (key, item) {
                 // Add a list item for the product.
+               $("#lista-produtos").append(
+                "<li>"+
+                "<input name='checkbox-h-6a7' id='checkbox-h-6a7' type='checkbox'>"+
+                "<label for='checkbox-h-6a7>"+
+                "<img src='img/garrafao.png'/>"+
+                "<h3>Indaiá - 20L (Unidade)</h3>"+
+                "<span>R$ 7,50</span>"+
+                "</label>"+
+                "</li>")
 
-            // $("#result-area").append("<p>" + data + "</p>");
-          //  $('#').listview('refresh');
 
-            });
 
-            alert("Aqui");
+
+              });
+
+             $('#lista-produtos').listview('refresh');
+
+
+
         });
 
 

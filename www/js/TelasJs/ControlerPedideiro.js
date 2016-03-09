@@ -12,8 +12,10 @@ var PedideiroManager = {
 
         var codigo = $(this).find(".codigoFornecedor").val()
 
-        alert($(this).text());
-        console.log(codigo);
+
+
+
+
     });
 
 
@@ -115,7 +117,7 @@ var PedideiroManager = {
 
                 $("#lista_fornecedores").append(
                         " <li>" +
-                        " <a class='lista-fornecedor' href='#fornecedorProdutos' data-transition='slide'>" +
+                        " <a class='lista-fornecedor' href='#fornecedorProdutos' data-transition='slide'>"+
                         " <i class='flaticon-transport643'></i>" +
                         " <div class='list-info'>" +
                         " <h3>"+item.Nome+"</h3>" +
@@ -290,7 +292,34 @@ var PedideiroManager = {
 
     carregarProdutos : function(id){
 
+        var token = localStorage.getItem('jtoken');
 
-    }
+        $.ajax({
+            url:   this.basePath() + "/pedideiro/produtos/obter?Id=" +id,
+            type: 'GET',
+            contentType: 'application/json',
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        })
+        .done(function (data) {
+           // $("#").empty();
+            $.each(data, function (key, item) {
+                // Add a list item for the product.
+
+            // $("#result-area").append("<p>" + data + "</p>");
+          //  $('#').listview('refresh');
+
+            });
+
+            alert("Aqui");
+        });
+
+
+
+    }, // Carrega lista de produtos por fornecedor.
+
+
+
 
 }

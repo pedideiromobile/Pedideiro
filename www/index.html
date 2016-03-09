@@ -25,7 +25,7 @@
     <script src="js/mobile/jquery.mobile-1.4.5.min.js"></script>
     <script src="http://maps.googleapis.com/maps/api/js?v=3.exp"></script>
     <script src="js/mobile/jquery-ui.js"></script>
-    <script src="js/mobile/jquery.spinbox.js"></script>-->
+    <script src="js/mobile/jquery.spinbox.js"></script>
     <script src="js/TelasJs/ControlerPedideiro.js"></script>
     <link href="js/mobile/jquery.mobile-1.4.5.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
@@ -76,7 +76,7 @@
 
  });
 
- $(document).on("pageshow", "#fornecedores", function () {
+ $(document).on("pageinit", "#fornecedores", function () {
 
 
         PedideiroManager.carregarFornecedores();
@@ -90,19 +90,26 @@
 
         });
 
-   $(document).on("click", "#lista_fornecedores li" ,function (event) {
+   $(document).on("click", "#lista_fornecedores li" ,function () {
 
       var codigo = $(this).find(".codigoFornecedor").val()
 
-      alert($(this).text());
-      console.log(codigo);
+      PedideiroManager.carregarProdutos(codigo);
+
+    //  alert($(this).text());
+     // console.log(codigo);
+
+
+
+
+
    });
 
 
 //Maquina Fabricio
  });
 
- $(document).on("pageshow", "#fornecedorProdutos", function () {
+ $(document).on("pageinit", "#fornecedorProdutos", function () {
 
 
 
@@ -299,7 +306,7 @@
             <h1>Fornecedores</h1>
             <a href="#nav" class="ui-btn ui-btn-icon-left"><i class="flaticon-lines7"></i></a>
             <a href="#filter" class="ui-btn ui-btn-icon-left"><i class="flaticon-filter"></i></a>
-        </div><!-- /header -->
+        </div>
 
         <div data-role="navbar">
             <ul>
@@ -702,7 +709,7 @@
         <div data-role="header" data-position="fixed" data-tap-toggle="false">
             <h1>Meus pedidos</h1>
             <a href="#" data-rel="back" class="ui-btn ui-btn-icon-left btn-back"><i class="flaticon-go10"></i></a>
-        </div><!-- /header -->
+        </div>
 
         <div class="ui-content" role="main">
             <div class="padding-inner">
@@ -735,7 +742,7 @@
         <input type="hidden" id="txtLongitude" name="txtLongitude" />
 
         <div role="main" class="ui-content" id="map-canvas">
-            <!-- map loads here... -->
+
         </div>
 
     </div>

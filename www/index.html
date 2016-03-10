@@ -99,11 +99,11 @@
     //  alert($(this).text());
      // console.log(codigo);
 
-
-
-
-
    });
+
+
+
+
 
 
 //Maquina Fabricio
@@ -113,6 +113,23 @@
 
 
 
+   $(document).on("click", ".check-product" ,function () {
+
+      var check = $(this).val()
+
+
+      if (check){
+
+
+          //localStorage.setItem()
+
+
+      }
+
+
+
+
+   });
 
 
 
@@ -389,12 +406,13 @@
             <div id="produtos" class="text-center">
            <div data-role="collapsible"  data-collapsed="false" data-iconpos="right" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
                 <h2 class="title-listview"><i class="flaticon-liquid15"></i> ÁGUA NATURAL</h2>
-                 <fieldset class="list-product" data-role="controlgroup" data-iconpos="right">
+                 <fieldset id="lista-produtos" class="list-product" data-role="controlgroup" data-iconpos="right">
 
-                 <ul class="list-vendor"  id="lista-produtos"  data-role="listview"  data-filter-theme="a" data-inset="true">
+           <!--      <ul class="list-vendor"  id="lista-produtos"  data-role="listview"  data-filter-theme="a" data-inset="true">
 
 
-                 </ul>
+
+                 </ul>-->
                 </fieldset>
           </div>
                 <div data-role="collapsible" data-collapsed="false" data-iconpos="right" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
